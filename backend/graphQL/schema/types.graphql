@@ -1,0 +1,52 @@
+type User {
+    _id: ID!
+    email: String!
+    password: String!
+    name: String!
+    lastname: String!
+    avatar: String!
+    gender: String!
+    createdProducts: [Product]! 
+    dialogs: [Dialog]!
+}
+
+type Dialog {
+    url: ID!
+    messages: [Message]!
+}
+
+type Message {
+    sender: User!
+    text: String!
+}
+
+type File {
+    name: String!
+    type: String!
+    size: Int!
+    path: String!
+}
+
+type Product {
+    _id: ID!
+    title: String!
+    description: String!
+    price: Float!
+    image: String!
+    category: String!
+    views: Int!
+    likes: Int!
+    creator: User!
+}
+
+type Like {
+    _id: ID!
+    user: ID!
+    product: Product!
+}
+
+type RecycleBin {
+    _id: ID!
+    products: [Product]!
+    user: ID!
+}

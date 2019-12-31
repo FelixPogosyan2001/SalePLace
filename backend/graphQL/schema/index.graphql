@@ -1,0 +1,27 @@
+#import * from 'inputs.graphql'
+#import * from 'types.graphql'
+
+type Query {
+    products: [Product]!
+    login(fieldsData: Login!) : String!
+    user: User!
+    productsCatalog(category: String!) : [Product]!
+    searchProduct(word: String!) : [Product]
+    createdProducts: [Product]!
+    recommendations: [Product]!
+    likes: [Like]!
+    recycleBin: [Product]!
+}
+
+type Mutation {
+    createProduct(data: ProductInput!) : Product!
+    createUser(userData: UserInput!) : User!
+    editUser(userData:UserInput!) : User!
+    updateProduct(id: ID!,values: ProductInput!) : Product!
+    deleteProduct(id: ID!) : String!
+    likeProduct(productId: ID!) : Like!
+    deleteLike(productId: ID!) : String
+    deleteProductFromRecycleBin(productId: ID!) : RecycleBin
+    addProductToRecycleBin(productId: ID!) : RecycleBin
+    updateDialogs(dialog: DialogInput,message: MessageInput): [Dialog]!
+}

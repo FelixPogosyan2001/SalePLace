@@ -1,0 +1,48 @@
+ scalar Upload
+
+ input UserInput {
+    name: String
+    lastname: String
+    email: String
+    password: String
+    gender:String
+    avatar: Upload
+    dialogs: DialogInput
+}
+
+input Login {
+    email: String!
+    password: String!
+}
+
+input SenderInput {
+    _id: ID!
+    name: String!
+    lastname: String!
+    avatar: String!
+}
+
+input DialogInput {
+    url: ID!
+    messages: [MessageInput]!
+}
+
+input MessageInput {
+    sender: SenderInput!
+    text: String!
+}
+
+input Category {
+    name: String!
+    verbose: String!
+}
+
+input ProductInput {
+    title: String
+    description: String
+    price: Float
+    category: String
+    image: Upload
+    views: Int
+    likes: Int
+}
