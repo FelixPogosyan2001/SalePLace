@@ -12,7 +12,11 @@ export default {
                 userData: meta
             }
         };
-        let {data} = await instance.post('graphql',request);
+        let {data} = await instance.post('graphql',request,{
+            headers : {
+                'Authorization' : `${new Date().toISOString()} ${localStorage.getItem('token')}`
+            }
+        });
         return data.data.login;
     },
     signUp : async (data) => {
@@ -37,11 +41,11 @@ export default {
         form.append('0',data['avatar']);
         await instance.post('graphql',form);
     },
-    getUser : async () => {
+    getUser : async (id) => {
         const request = {
             query : `
-                query getUser {
-                    user {
+                query getUser($id : ID) {
+                    user(id : $id) {
                         _id,
                         email,
                         password,
@@ -56,17 +60,32 @@ export default {
                                     _id,
                                     name,
                                     lastname,
-                                    avatar,
+                                    avatar
                                 },
-                                text
+                                receiver {
+                                    _id,
+                                    name,
+                                    lastname,
+                                    avatar
+                                }
+                                text,
+                                date
                             }
                         }
                     }
                 }
-            `
+            `,
+            variables : {
+                id
+            }
         };
   
-        const response = await instance.post('graphql',request);
+        const response = await instance.post('graphql',request,{
+            headers : {
+                'Authorization' : `${new Date().toISOString()} ${localStorage.getItem('token')}`
+            }
+        });
+        
         return response.data.data.user;
     },
     editUser : async (settingsFields) => {
@@ -104,7 +123,14 @@ export default {
                                 lastname,
                                 avatar
                             },
-                            text
+                            receiver {
+                                _id,
+                                name,
+                                lastname,
+                                avatar
+                            },
+                            text,
+                            date
                         }
                     }
                 }
@@ -117,5 +143,38 @@ export default {
 
         const {data} = await instance.post('graphql',request);
         return data.data.updateDialogs;
+    },
+    deleteDialog : async (url) => {
+        const request = {
+            query : `
+                mutation Deleting($url : ID!) {
+                    deleteDialog(url : $url) {
+                        url, 
+                        messages {
+                            sender {
+                                _id,
+                                name,
+                                lastname,
+                                avatar
+                            },
+                            receiver {
+                                _id,
+                                name,
+                                lastname,
+                                avatar
+                            },
+                            text,
+                            date
+                        }
+                    }
+                }
+            `,
+            variables : {
+                url
+            }
+        };
+
+        const {data} = await instance.post('graphql',request);
+        return data.data.deleteDialog;
     }
 }

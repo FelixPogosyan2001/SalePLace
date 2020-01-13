@@ -1,10 +1,19 @@
-import React,{Fragment} from 'react';
+import React,{Fragment,useEffect,useState} from 'react';
 import {connect} from 'react-redux';
+import {deleteLike,likeProduct,addView,myLikes} from '../../redux/actions/products';
+import {addInCart} from '../../redux/actions/cart';
 import {NotFound} from '../NotFound';
 import Product from '../Products/Product';
 import photo from '../../images/loupe.png';
 
-const SearchPage = ({foundProducts}) => {
+const SearchPage = ({foundProducts,like,deleteLike,addInCart,addView,myLikes}) => {
+    
+    useEffect(() => {
+        if (foundProducts.length) {
+            myLikes();
+        }
+    },[foundProducts]);
+
     return (
         <div className='found'>
             {foundProducts.length ? (
@@ -13,10 +22,11 @@ const SearchPage = ({foundProducts}) => {
                     {foundProducts.map(foundProduct => (
                         <Product 
                             key={foundProduct._id} 
-                            like={() => '12'} 
-                            deleteLike={() => '123'} 
-                            addInCart = {() => ''}
-                            product={{...foundProduct,liked : false}} />
+                            like={like} 
+                            deleteLike={deleteLike} 
+                            addInCart = {addInCart}
+                            addView={addView}
+                            product={foundProduct} />
                     ))}
                 </Fragment>
             ) : <NotFound />}
@@ -25,4 +35,12 @@ const SearchPage = ({foundProducts}) => {
     )
 }
 
-export default connect(({products}) => ({foundProducts : products}))(SearchPage);
+const mapDispatchesToProps = {
+    like : likeProduct,
+    myLikes,
+    deleteLike,
+    addView,
+    addInCart
+};
+
+export default connect(({products}) => ({foundProducts : products.data}),mapDispatchesToProps)(SearchPage);

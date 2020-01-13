@@ -1,23 +1,37 @@
 import React,{useEffect,useState} from 'react';
 import {connect} from 'react-redux';
 import {connectToServer,sendMessage,currentDialog} from '../redux/actions/communication';
+import usersAPI from '../api/users';
 import Message from './Dialogs/Message';
 import ConstructMessage from './Dialogs/MessageConstructor';
 
 const Chat = ({dialog,connectToServer,sender,sendMessage,currentDialog}) => {
     const [textMessage,setText] = useState('');
     const ids = dialog.url.split('&&');
-    const receiver = ids.indexOf(sender._id) ? dialog.messages.find(mes => mes.sender._id == ids[0]).sender : dialog.messages.find(mes => mes.sender._id == ids[1]).sender ;
+    let [receiver,setReceiver] = useState(null);
     
     useEffect(() => {
        connectToServer(dialog.url);
+       usersAPI
+            .getUser(ids[+!ids.indexOf(sender._id)])
+            .then(res => setReceiver({
+                _id : res._id,
+                name : res.name,
+                lastname : res.lastname,
+                avatar : res.avatar
+            }));
     },[])
 
     const send = (e) => {
-        if (e.charCode == 13 && textMessage.trim().length) {
+        if (e.charCode == 13 && textMessage.trim().length || typeof(e) == 'boolean') {
             const message = new ConstructMessage(sender,receiver,textMessage);
             sendMessage(message);
+            setText('');
         }
+    }
+
+    const handlerMessage = (e) => {
+        setText(e.target.value);
     }
 
     return (
@@ -27,8 +41,8 @@ const Chat = ({dialog,connectToServer,sender,sendMessage,currentDialog}) => {
             </section>
             <section className="messages">
                 {
-                    dialog.messages.map(({sender,text},index) => (
-                        <Message key={index} sender={sender} text={text} />
+                    dialog.messages.map((message,index) => (
+                        <Message key={index} {...message} />
                     ))
                 }
             </section>
@@ -36,9 +50,9 @@ const Chat = ({dialog,connectToServer,sender,sendMessage,currentDialog}) => {
                 <input 
                     value={textMessage} 
                     onKeyPress={send} 
-                    onChange={(e) => setText(e.target.value)} 
+                    onChange={handlerMessage} 
                     placeholder='Write a message' />
-                {textMessage && <i onClick={send} className="fas fa-paper-plane"></i>}
+                {textMessage && <i onClick={send.bind(this,true)} className="fas fa-paper-plane"></i>}
             </section>
         </div>
     )

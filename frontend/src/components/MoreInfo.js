@@ -12,10 +12,14 @@ const MoreInfo = (props) => {
                 <h1>{props.title}</h1>
                 <p>{props.description}</p>
                 <span>{props.price} $</span>
-                {props.isMy ? null : <button onClick={() => setMessageModal(true)}>Write to seller</button>}
+                <div>
+                    <div style={{backgroundImage:`url(http://localhost:2001/${props.creator.avatar})`}} /> 
+                    <b>{props.creator.name + ' ' + props.creator.lastname}</b>
+                </div>
+                {localStorage.getItem('token') && <button onClick={() => setMessageModal(true)}>Write to seller</button>}
             </div>
             <i className="moreInfo__delete fas fa-times" onClick={props.close.bind(this,false)} />
-            {createPortal(<MessageForm receiver={props.creator} />,document.body)}
+            {messageModal && createPortal(<MessageForm close={setMessageModal} receiver={props.creator} />,document.body)}
         </div>
     )
 }

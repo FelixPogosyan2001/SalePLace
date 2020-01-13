@@ -1,6 +1,6 @@
 import React,{Fragment,useState,useEffect} from 'react';
 import check from '../additional/check';
-import InputBox from './InputBox';
+import InputBox from './Inputs/InputBox';
 import Loading from './loaders/Ellipsis';
 import {connect} from 'react-redux';
 import {signIn} from '../redux/actions/user';

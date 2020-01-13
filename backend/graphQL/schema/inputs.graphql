@@ -15,7 +15,7 @@ input Login {
     password: String!
 }
 
-input SenderInput {
+input InterlocutorInput {
     _id: ID!
     name: String!
     lastname: String!
@@ -28,8 +28,10 @@ input DialogInput {
 }
 
 input MessageInput {
-    sender: SenderInput!
+    sender: InterlocutorInput!
+    receiver: InterlocutorInput!
     text: String!
+    date: String!
 }
 
 input Category {

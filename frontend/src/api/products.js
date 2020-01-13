@@ -17,7 +17,8 @@ export default {
                         creator {
                             _id,
                             name,
-                            lastname
+                            lastname,
+                            avatar
                         }
                     }
                 }
@@ -62,7 +63,13 @@ export default {
                         image,
                         views,
                         likes,
-                        category
+                        category,
+                        creator {
+                            _id,
+                            name,
+                            lastname,
+                            avatar
+                        }
                     }
                 }
             `,
@@ -130,44 +137,73 @@ export default {
         const result = await instance.post('graphql',request);
         console.log(result)
     },
-    getProductsCatalog : async (name) => {
+    getProductsCatalog : async (name,page,pageSize) => {
         const request = {
             query : `
-                query getProducts($category : String!){
-                    productsCatalog(category: $category) {
-                        title,
-                        description,
-                        price,
-                        image,
-                        views,
-                        likes,
-                        category
+                query getProducts($category : String!,$page : Int!,$pageSize : Int){
+                    productsCatalog(category: $category,page : $page,pageSize : $pageSize) {
+                        data {
+                            _id,
+                            title,
+                            description,
+                            price,
+                            image,
+                            views,
+                            likes,
+                            category,
+                            creator {
+                                _id,
+                                name,
+                                lastname,
+                                avatar
+                            }
+                        },
+                        totalCount,
+                        page,
+                        pageSize
                     }
                 }
             `,
             variables : {
-                category : name
+                category : name,
+                page,
+                pageSize
             }
         };
        let {data} = await instance.post('graphql',request);
        return data.data.productsCatalog;
     },
-    getProducts : async () => {
+    getProducts : async (page,pageSize) => {
         const request = {
             query : `
-                query  {
-                    products {
-                        _id,
-                        title,
-                        description,
-                        price,
-                        image,
-                        views,
-                        likes,
-                        category
+                query Pagination($page : Int!,$pageSize : Int){
+                    products(page : $page,pageSize : $pageSize){
+                        data {
+                            _id,
+                            title,
+                            description,
+                            price,
+                            image,
+                            views,
+                            likes,
+                            category,
+                            creator {
+                                _id,
+                                name,
+                                lastname,
+                                avatar
+                            }
+                        },
+                        totalCount,
+                        page,
+                        pageSize
                     }
                 }
-            `
+            `,
+            variables : {
+                page,
+                pageSize
+            }
         }
         
         const {data} = await instance.post('graphql',request);
@@ -178,6 +214,7 @@ export default {
             query : `
                 query Searching($expect : String!){
                     searchProduct(word: $expect) {
+                        _id,
                         title,
                         description,
                         price,
@@ -194,5 +231,25 @@ export default {
         };
         const {data} = await instance.post('graphql',request);
         return data.data.searchProduct;
+    },
+    recommendations : async () => {
+        const request = {
+            query :  `
+                query {
+                    recommendations {
+                        _id,
+                        title,
+                        description,
+                        price,
+                        image,
+                        views,
+                        likes,
+                        category
+                    }
+                }
+            `
+        }
+        let {data} = await instance.post('graphql',request);
+        return data.data.recommendations;
     }
 }

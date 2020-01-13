@@ -5,6 +5,7 @@ import products from './products';
 import cart from './cart';
 import favorites from './favorites';
 import dialogs from './dialogs';
+import recommendations from './recommendations'
 
 export const reducer = combineReducers({
     auth,
@@ -12,5 +13,6 @@ export const reducer = combineReducers({
     dialogs,
     products,
     cart,
-    favorites
+    favorites,
+    recommendations
 })

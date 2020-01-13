@@ -15,5 +15,16 @@ module.exports = {
         }
   
         return sender.dialogs;
+    },
+    deleteDialog : async (parent,{url},context) => {
+        isLogged(context.isAuth);
+        try {
+            const user = await User.findById(context.userId['userId']);
+            user.dialogs.splice(user.dialogs.findIndex(dialog => dialog.url == url),1);
+            await user.save();
+            return user.dialogs;
+        } catch(error) {
+            throw new Error(error);
+        }
     }
 }

@@ -1,46 +1,65 @@
-import React,{useEffect} from 'react';
+import React,{useEffect,useState} from 'react';
 import CatalogList from '../Catalog/CatalogList';
 import {connect} from 'react-redux';
 import Product from './Product';
-import {deleteLikeCatalog,likeProductCatalog,getProducts,addViewCatalog} from '../../redux/actions/products';
+import {Pagination} from '../Pagination';
+import {deleteLike,likeProduct,getProducts,addView,myLikes,productsCatalog} from '../../redux/actions/products';
 import {addInCart} from '../../redux/actions/cart';
+import {RingLoader} from '../loaders/Ring';
+import {NotFound} from '../NotFound';
+import ProductContain from '../../context/product';
 
-const Products = ({products,deleteLikeCatalog,likeProductCatalog,getProducts,addViewCatalog}) => {
+const Products = (props) => {
+    const [funcPag,switchFuncPag] = useState(false);
+
     useEffect(() => {
-        getProducts();
+        props.getProducts(props.currentPage);
+        props.myLikes();
     },[])
 
     return (
         <div className='products-container'>
             <section className='products-container__products'>
-                {products.length > 0 && products.map((product,index) => (
+                {props.products.length > 0 ? props.products.map((product,index) => (
                     <Product 
-                         like={likeProductCatalog} 
-                         addView={addViewCatalog} 
-                         deleteLike={deleteLikeCatalog} 
-                         isMy={true} 
+                         like={props.like} 
+                         addView={props.addView} 
+                         deleteLike={props.deleteLike} 
                          key={index} 
-                         addInCart={addInCart}
+                         addInCart={props.addInCart}
                          product={product} />
-                ))}
+                )) : props.loader ? <RingLoader /> : <NotFound />}
+                <Pagination 
+                    getProducts={funcPag ? props.productsCatalog : props.getProducts} 
+                    current={props.currentPage} 
+                    totalCount={props.totalCount} 
+                    pageSize={props.pageSize} />
             </section>
             <menu type='list' className="products-container__catalog">
-                <CatalogList />
+                <ProductContain.Provider value={{switchFuncPag}}>
+                    <CatalogList />
+                </ProductContain.Provider>
             </menu>
         </div>
     )
 }
 
 const mapStateToProps = ({products}) => ({
-    products
+    products : products.data,
+    totalCount : products.totalCount,
+    currentPage : products.currentPage,
+    pageSize : products.pageSize,
+    loader : products.loader
 });
 
 const mapDispatchesToProps = {
-    likeProductCatalog,
-    deleteLikeCatalog,
+    like : likeProduct,
+    myLikes,
+    deleteLike,
+    addView,
+    addInCart,
     getProducts,
-    addViewCatalog,
-    addInCart
-}
+    productsCatalog
+};
 
 export default connect(mapStateToProps,mapDispatchesToProps)(Products);

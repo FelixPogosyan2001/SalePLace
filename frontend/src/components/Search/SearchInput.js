@@ -20,8 +20,8 @@ const SearchInput = (props) => {
 
     if (redirect) return <Redirect to='/search' />
     return (
-        <input onKeyPress={search} onChange={(e) => setValue(e.target.value)} value={value} className='searchInput'/>
+        <input onKeyPress={search} onChange={(e) => setValue(e.target.value)} value={value} className={`searchInput ${!props.token && 'changeLocalInput'}`}/>
     )
 }
 
-export default connect(null,{search})(SearchInput);
+export default connect(({auth}) => ({token : auth.token}),{search})(SearchInput);

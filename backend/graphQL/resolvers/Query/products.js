@@ -3,9 +3,16 @@ const User = require('../../../models/user');
 const Like = require('../../../models/like');
 const {isLogged,lenghtSubsequence,transform} = require('../../helpers');
 
+
 module.exports = {
-    products : async () => {
-        return await Product.find().populate('creator');
+    products : async (parent,{page,pageSize = 8}) => {
+        const response = {
+            data : await Product.find().populate('creator').skip((page - 1) * pageSize).limit(pageSize),
+            totalCount : await Product.count(),
+            page,
+            pageSize
+        }
+        return response;
     },
     createdProducts : async (parent,args,context) => {
         isLogged(context.isAuth);
@@ -13,9 +20,14 @@ module.exports = {
         const user = await User.findById(userId).populate('createdProducts');
         return user.createdProducts.map(product => transform(product._doc));
     },
-    productsCatalog : async (parent,{category}) => {
-        let sortedProducts = await Product.find({category}).populate('creator');
-        return sortedProducts;
+    productsCatalog : async (parent,{category,page,pageSize = 8}) => {
+        const response = {
+            data : await Product.find({category}).populate('creator').skip((page - 1) * pageSize).limit(pageSize),
+            totalCount : await Product.find({category}).count(),
+            page,
+            pageSize
+        }
+        return response;
     },
     searchProduct : async (parent,{word}) => {
         let array = await Product.find();
@@ -43,16 +55,16 @@ module.exports = {
             return foundedProducts;
         }
     },
-    recommendations : async () => {
-        var likes = await Like.find().populate('product');
+    recommendations : async (parent,args,context) => {
+        isLogged(context.isAuth);
+        var likes = await Like.find({user : context.userId['userId']}).populate('product');
+        likes = likes.map(like => like.product);
         /*var likes = [
             {"_id":"5de8014fb8de261afc22e6a9","title":"airpods","description":"New","price":500,"image":"sfsff.jpg","views":0,"likes":0,"category":"gadgets","creator":"5de41362aa24e02b18c8678a"},
-            {"_id":"5de80172b8de261afc22e6aa","title":"iphone","description":"super","price":1000,"image":"sfsweweewff.jpg","views":0,"likes":0,"category":"gadgets","creator":"5de41362aa24e02b18c8678a"},
-            {"_id":"5de801d0b8de261afc22e6ab","title":"futbalka","description":"super","price":1000,"image":"sfwrwrsweweewff.jpg","views":0,"likes":0,"category":"clothes","creator":"5de41362aa24e02b18c8678a"},
-            {"_id":"5de801d1b8de261afc22e6ac","title":"futbalka","description":"super","price":1000,"image":"sfwrwrsweweewff.jpg","views":0,"likes":0,"category":"clothes","creator":"5de41362aa24e02b18c8678a",},
-            {"_id":"5de801e0b8de261afc22e6ad","title":"futbalka","description":"super","price":1000,"image":"sfwrwrsweweewff.jpg","views":0,"likes":0,"category":"sport","creator":"5de41362aa24e02b18c8678a",},
-            {"_id":"5de801e0b8de261afc22e6ae","title":"futbalka","description":"super","price":1000,"image":"sfwrwrsweweewff.jpg","views":0,"likes":0,"category":"sport","creator":"5de41362aa24e02b18c8678a",},
-            {"_id":"5de801e8b8de261afc22e6af","title":"futbalka","description":"super","price":1000,"image":"sfwrwrsweweewff.jpg","views":0,"likes":0,"category":"srrt","creator":"5de41362aa24e02b18c8678a",}
+            {"_id":"5de801e8b8de261afc22e6af","title":"futbalka","description":"super","price":1000,"image":"sfwrwrsweweewff.jpg","views":0,"likes":0,"category":"srrt","creator":"5de41362aa24e02b18c8678a",},
+            {"_id":"5de801e8b8de261afc22e6af","title":"futbalka","description":"super","price":1000,"image":"sfwrwrsweweewff.jpg","views":0,"likes":0,"category":"year","creator":"5de41362aa24e02b18c8678a",},
+            {"_id":"5de801e8b8de261afc22e6af","title":"futbalka","description":"super","price":1000,"image":"sfwrwrsweweewff.jpg","views":0,"likes":0,"category":"rught","creator":"5de41362aa24e02b18c8678a",}
+            
         ]*/
         var list = {};
         var betterCategory = new Array(3); // Standart Middle Premium 
@@ -77,7 +89,7 @@ module.exports = {
 
             list.splice(deletedCategory,1);
         }
-    
-        return await Product.find({category : {$in : betterCategory}})
+      
+        return await Product.find({category : {$in : betterCategory}}).populate('creator');
     }
 }

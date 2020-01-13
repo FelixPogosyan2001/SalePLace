@@ -5,27 +5,22 @@ import CreatedProducts from '../Profile/CreatedProducts';
 import ProfileContext from '../../context/profile';
 import {connect} from 'react-redux';
 import {getUser,editUser} from '../../redux/actions/user';
-import {connectToServer} from '../../redux/actions/communication';
 
-const Profile = ({getUser,user,edit,connectToServer}) => {
+const Profile = ({getUser,user,edit}) => {
     const [page,setPage] = useState('Profile');
 
     useEffect(() => {   
-        if (user._id && user.connection.status != 'online'){
-           //connectToServer();
-        } else if (!user._id) {
-            getUser();
-        }
-    },[user]);
+       getUser();
+    },[]);
 
     return (
         <div className="profile">
             <div className="profile__interactive">
                 <h1 className="profile__interactive__title">Private office</h1>
                 <menu className="profile__interactive__menu">
-                    <li onClick={(e) => setPage(e.target.textContent)} >Profile</li>
-                    <li onClick={(e) => setPage(e.target.textContent)} >Settings</li>
-                    <li onClick={(e) => setPage(e.target.textContent)} >My products</li>
+                    <li className={page == 'Profile' ? 'active' : ''} onClick={(e) => setPage(e.target.textContent)} >Profile</li>
+                    <li className={page == 'Settings' ? 'active' : ''} onClick={(e) => setPage(e.target.textContent)} >Settings</li>
+                    <li className={page == 'My products' ? 'active' : ''} onClick={(e) => setPage(e.target.textContent)} >My products</li>
                 </menu>
             </div>
             <div className="profile__content">
@@ -43,4 +38,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps,{getUser,edit : editUser,connectToServer})(Profile)
+export default connect(mapStateToProps,{getUser,edit : editUser})(Profile)

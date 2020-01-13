@@ -21,7 +21,9 @@ class Message {
     newMessage(){
       return {
           sender : this.sender,
-          text: this.message
+          receiver : this.receiver,
+          text: this.message,
+          date : new Date().toLocaleString()
         }
     }
 }

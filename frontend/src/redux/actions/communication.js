@@ -19,8 +19,14 @@ export const sendMessage = (message,format = 'chat') => async (dispatch) => {
         dispatch(updateVersionDialogs(myDialogs))
     } else if (format == 'chat') {
         socket.emit('message',message.newMessage());
-        await usersAPI.updateDialogs(message.dialog,message.newMessage());
+        const myDialogs = await usersAPI.updateDialogs(message.dialog,message.newMessage());
+        dispatch(updateVersionDialogs(myDialogs));
     }
+}
+
+export const deleteDialog = (url) => async (dispatch) => {
+    let dialogs = await usersAPI.deleteDialog(url);
+    dispatch(updateVersionDialogs(dialogs));
 }
 
 export const connectToServer = (urlRoom) => async (dispatch) => {
@@ -29,8 +35,5 @@ export const connectToServer = (urlRoom) => async (dispatch) => {
 
     socket.on('getMessage',(message) => {
         dispatch(addMessage(message));
-        //dispatch(updateVersionDialogs(myDialogs));
     })
-
-    dispatch(stateConnection(true));
 }

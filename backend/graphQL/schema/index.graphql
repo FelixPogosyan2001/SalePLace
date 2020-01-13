@@ -2,10 +2,10 @@
 #import * from 'types.graphql'
 
 type Query {
-    products: [Product]!
+    products(page: Int!,pageSize: Int): ProductsContainer!
     login(fieldsData: Login!) : String!
-    user: User!
-    productsCatalog(category: String!) : [Product]!
+    user(id: ID): User!
+    productsCatalog(category: String!,page: Int!,pageSize: Int) :  ProductsContainer!
     searchProduct(word: String!) : [Product]
     createdProducts: [Product]!
     recommendations: [Product]!
@@ -24,4 +24,5 @@ type Mutation {
     deleteProductFromRecycleBin(productId: ID!) : RecycleBin
     addProductToRecycleBin(productId: ID!) : RecycleBin
     updateDialogs(dialog: DialogInput,message: MessageInput): [Dialog]!
+    deleteDialog(url: ID!) : [Dialog]!
 }

@@ -17,7 +17,9 @@ type Dialog {
 
 type Message {
     sender: User!
+    receiver: User!
     text: String!
+    date: String!
 }
 
 type File {
@@ -37,6 +39,13 @@ type Product {
     views: Int!
     likes: Int!
     creator: User!
+}
+
+type ProductsContainer {
+    data: [Product]!
+    totalCount: Int!
+    page: Int!
+    pageSize: Int!
 }
 
 type Like {

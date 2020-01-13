@@ -2,8 +2,8 @@ import React,{Fragment,useState} from 'react';
 import usersAPI from '../api/users'
 import Loading from './loaders/Ellipsis';
 import check from '../additional/check';
-import InputBox from './InputBox';
-import {Radio} from './Radio';
+import InputBox from './Inputs/InputBox';
+import {Radio} from './Inputs/Radio';
 
 const SignUp = () => {
     const [data,setData] = useState({

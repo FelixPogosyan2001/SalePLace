@@ -9,11 +9,11 @@ module.exports = {
         let token = jwt.sign({userId:user._id},'saleplace952324',{'expiresIn':'2h'});
         return token;
     },
-    user : async(parent,arg,context) => {
+    user : async(parent,{id},context) => {
         try {
             isLogged(context.isAuth);
             const {userId} = context.userId;
-            return await User.findById(userId)
+            return await User.findById(id || userId)
         } catch(e) {
             throw new Error(e);
         }

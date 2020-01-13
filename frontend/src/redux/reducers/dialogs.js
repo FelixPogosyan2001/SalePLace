@@ -9,9 +9,11 @@ const initialState = {
 export default (state = initialState,action) => {
     switch (action.type) {
         case FIX_DATA_USER :
-            return {
-                ...state,
-                dialogs : [...action.payload.dialogs]
+            if (action.payload.dialogs) {
+                return {
+                    ...state,
+                    dialogs : [...action.payload.dialogs]
+                }
             }
         case UPDATE_DIALOGS:
             return {
@@ -26,6 +28,7 @@ export default (state = initialState,action) => {
         case NEW_MESSAGE : 
            let array = [...state.currentDialog.messages];
            array.push(action.payload);
+           
             return {
                 ...state,
                 currentDialog : {
