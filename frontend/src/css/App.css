@@ -1103,6 +1103,11 @@ footer {
   grid-gap: 1.2rem;
   padding: 30px;
   position: relative;
+  min-height: 80vh;
+}
+
+.products-container .products-container__products .lds-dual-ring {
+  left: calc(50vw - 40px - 110px);
 }
 
 .products-container .products-container__products .error404 {
@@ -1318,9 +1323,12 @@ footer {
 }
 
 .pagination {
-  display: -ms-grid;
-  display: grid;
-  justify-items: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
   margin-top: 30px;
   width: 50%;
   position: relative;
@@ -1651,6 +1659,8 @@ footer {
   width: 100%;
   height: auto;
   background-color: #fff;
+  -webkit-box-shadow: 5px 8px 10px rgba(48, 18, 255, 0.6);
+          box-shadow: 5px 8px 10px rgba(48, 18, 255, 0.6);
 }
 
 .product .product__header {
@@ -1953,7 +1963,7 @@ footer {
   background: #1616c5;
   position: absolute;
   top: 2px;
-  left: 1px;
+  left: 9.5%;
 }
 
 .inputRadio label {
@@ -2036,6 +2046,12 @@ footer {
   -ms-grid-column-span: 5;
   grid-column: 1/6;
   font-family: 'Robotto',sans-serif;
+}
+
+.favorites .lds-dual-ring {
+  position: relative;
+  height: 60vh;
+  left: calc(50vw - 80px);
 }
 
 .focusInputs {

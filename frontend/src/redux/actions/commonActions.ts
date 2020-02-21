@@ -1,0 +1,1 @@
+export const toggleLoader = <S, L>(status: S, loader: L): {type: L, payload: S} => ({type : loader,payload : status});

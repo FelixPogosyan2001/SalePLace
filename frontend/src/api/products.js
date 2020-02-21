@@ -41,7 +41,13 @@ export default {
                             image,
                             views,
                             likes,
-                            category
+                            category,
+                            creator {
+                                _id,
+                                name,
+                                lastname,
+                                avatar
+                            }
                         }
                     }
                 }
