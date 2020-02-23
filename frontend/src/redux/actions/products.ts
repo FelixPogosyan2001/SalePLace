@@ -1,6 +1,6 @@
 import productsAPI from '../../api/products';
 import {toggleLoader} from './commonActions';
-import {Product, Like} from '../../additional/interfaces';
+import {Product, Like, Pag} from '../../additional/interfaces';
 import {AppActions} from '../../additional/actions';
 import {Dispatch} from 'redux';
 
@@ -17,9 +17,9 @@ export const TOGGLE_LOADER_PRODUCTS = 'TOGGLE_LOADER_PRODUCTS';
 const newProduct = (product: Product): AppActions => ({type : ADD_NEW_PRODUCT,payload : product});
 const like = (productId: string): AppActions => ({type : LIKE_PRODUCT,payload : productId});
 const withoutLike = (productId: string): AppActions => ({type : DELETE_LIKE,payload : productId});
-const setLikes = (likes: Array<Like>): AppActions => ({type : FIX_LIKES,payload : likes})
+const setLikes = (likes: Array<Product>): AppActions => ({type : FIX_LIKES,payload : likes})
 const incrementView = (views: string): AppActions => ({type : ADD_VIEW,payload : views});
-const setFoundProducts = (products: Array<Product>): AppActions => ({type : FIX_FOUND_PRODUCTS,payload : products}) 
+const setFoundProducts = (products: Array<Product> | Pag): AppActions => ({type : FIX_FOUND_PRODUCTS,payload : products}) 
 const implementRecommendations = (rec: Array<Product>): AppActions => ({type : GET_RECOMMENDATIONS,payload : rec});
 
 // Thunk Creators 
@@ -44,7 +44,7 @@ export const deleteLike = (id: string) => async (dispatch: Dispatch<AppActions>)
 }
 
 export const myLikes = () => async (dispatch: Dispatch<AppActions>) => {
-    const likes: Array<Like> = await productsAPI.myLikes();
+    const likes: Array<Product> = await productsAPI.myLikes();
     dispatch(setLikes(likes));
 }
 
@@ -55,8 +55,7 @@ export const addView = (id: string, view: number) => async (dispatch: Dispatch<A
 
 export const productsCatalog = (name: string, page: number, pageSize: number) => async (dispatch: Dispatch<AppActions>) => {
     dispatch(toggleLoader(true,TOGGLE_LOADER_PRODUCTS));
-    const catalogItems: Array<Product> = await productsAPI.getProductsCatalog(name, page, pageSize);
-    dispatch(setFoundProducts(catalogItems));
+    dispatch(setFoundProducts(await productsAPI.getProductsCatalog(name, page, pageSize) as Pag));
     dispatch(toggleLoader(false, TOGGLE_LOADER_PRODUCTS));
 }
 

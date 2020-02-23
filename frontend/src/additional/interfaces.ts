@@ -21,7 +21,7 @@ export interface Action<T, P> {
 export interface Like {
     _id: string
     user: string
-    product: string
+    product: string | Product
 }
 
 export interface Person {
@@ -59,4 +59,11 @@ export interface Dispatches {
     deleteLike: (id: string) => void
     addView: (id: string, views: number) => void
     addInCart: (product: Product) => void
+}
+
+export interface Pag {
+    data: Array<Product> 
+    totalCount: number
+    page: number
+    pageSize: number
 }

@@ -1,4 +1,4 @@
-import {Product, Action, Like} from '../../additional/interfaces';
+import { Product, Action, Like, Pag } from '../../additional/interfaces';
 import {
     FIX_FOUND_PRODUCTS,
     ADD_NEW_PRODUCT,
@@ -9,19 +9,12 @@ import {
     TOGGLE_LOADER_PRODUCTS
 } from '../actions/products';
 
-interface Pag {
-    data: Array<Product> 
-    totalCount: number
-    page: number
-    pageSize: number
-}
-
 type ProductsState = typeof initialState
 export type Actions = (
     | Action<typeof FIX_FOUND_PRODUCTS, Array<Product> | Pag> 
     | Action<typeof ADD_NEW_PRODUCT, Product> 
     | Action<typeof LIKE_PRODUCT, string> 
-    | Action<typeof FIX_LIKES, Array<Like>> 
+    | Action<typeof FIX_LIKES, Array<Product>> 
     | Action<typeof DELETE_LIKE, string>  
     | Action<typeof ADD_VIEW, string> 
     | Action<typeof TOGGLE_LOADER_PRODUCTS, boolean> 

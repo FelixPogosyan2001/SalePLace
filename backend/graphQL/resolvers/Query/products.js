@@ -30,7 +30,7 @@ module.exports = {
         return response;
     },
     searchProduct : async (parent,{word}) => {
-        let array = await Product.find();
+        let array = await Product.find().populate('creator');
         let foundedProducts = [];
         let max = 0;
         let allegedProduct = null;
