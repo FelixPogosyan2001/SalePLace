@@ -12,7 +12,7 @@ interface DialogProps {
 
 const Dialog: React.FC<DialogProps> = (props) => {
     let [date,setDate] = useState<string>();
-    let [interlocutor,setInterlocutor] = useState<Person>(null);
+    let [interlocutor,setInterlocutor] = useState<Person>({} as Person);
     let deleted: boolean = false;
     const ids: Array<string> = props.url.split('&&');
 

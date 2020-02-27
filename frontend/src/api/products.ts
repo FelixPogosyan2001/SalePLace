@@ -106,7 +106,8 @@ export default {
                     value: { views : watches + 1 },
                     settings: { type: 'ProductInput', nonNull: true }
                 }
-            }
+            },
+            'NewViewOfProduct'
         )
     },
     getProductsCatalog : async (name: string, page: number, pageSize: number | any): Promise<Pag> => (
@@ -157,7 +158,7 @@ export default {
                 }
             },
             'Pagination' 
-        )
+        )   
     ),
     searchProduct : async (word: string): Promise<Array<Product>> => (
         await graphql.query(

@@ -1,4 +1,4 @@
-import React,{ useContext, Dispatch } from 'react';
+import React,{ useContext, Dispatch, useRef } from 'react';
 import { connect } from 'react-redux';
 import { productsCatalog } from '../../redux/actions/products';
 import ProductConatin from '../../context/product';
@@ -23,17 +23,29 @@ const CatalogItem: React.FC<CatalogITProps> = ({
     isOpen,
     productsCatalog
 }) => {
+    const menuCatalog = useRef<HTMLElement>(null);
     let result: any = useContext(ProductConatin);
     result = result || {data : null} ;
 
+    const closeCatalog = (): void => {
+        menuCatalog.current.style.maxHeight = '0px';
+        setTimeout(() => setCatalog(null), 500);
+    }
+
     return (
-         <li onClick={setCatalog.bind(null,name)}>
+         <li onClick={setCatalog.bind(null, name)} onDoubleClick={closeCatalog}>
              <i className={icon} />
              <span>{name}</span>
             {
-                isOpen ? <menu className='subparagraphs' >
+                isOpen ? <menu className='subparagraphs' ref={menuCatalog} >
                             {items.map((item,index) => (
-                                <li onClick={result.data ? result.change.bind(null, { ...result.data,category : item }) : () => { productsCatalog(item,1); result.switchFuncPag(true) }} key={index}>{item}</li>
+                                <li 
+                                    key={index}
+                                    onClick={
+                                        result.data ? result.change.bind(null, { ...result.data,category : item }) : 
+                                        () => { productsCatalog(item,1); result.switchFuncPag(true) }
+                                    } 
+                                >{item}</li>
                             ))}
                         </menu> : null
             }

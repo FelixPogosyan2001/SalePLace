@@ -25,7 +25,8 @@ export class GraphQLRequest {
             headers,
             transformRequest: [ function(data, headers) {
                 headers['Authorization'] =  auth();
-                return data;
+                headers.post['Content-Type'] = 'application/json';
+                return JSON.stringify(data);
             }]
         });
     }

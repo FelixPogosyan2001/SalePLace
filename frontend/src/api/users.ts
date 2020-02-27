@@ -1,13 +1,6 @@
 import { GraphQLRequest } from './graphql-request';
 import { Person, Message, Dialog } from '../additional/interfaces';
 
-interface User extends Person {
-    email: string
-    password: string
-    dialogs: Array<Dialog> 
-    createdProducts?: Array<string>
-}
-
 const graphql = new GraphQLRequest('http://localhost:2001/', {
     'Authorization' : `${new Date().toISOString()} ${localStorage.getItem('token')}` 
 });
@@ -50,7 +43,7 @@ export default {
             'signIn'
         )
     ),
-    signUp : async (data: Person): Promise<void> => {
+    signUp : async (data: Partial<Person>): Promise<void> => {
         const form = new FormData();
         const request = {
             query : `
@@ -74,7 +67,7 @@ export default {
 
         await graphql.sendForm(form);
     },
-    getUser : async (id: string): Promise<User> => (
+    getUser : async (id?: string): Promise<Person> => (
         await graphql.query(
             `user(id : $id) {
                 ${templateUser}
@@ -94,7 +87,7 @@ export default {
             'getUser'
         )
     ),
-    editUser : async (settingsFields: Partial<User>): Promise<User> => (
+    editUser : async (settingsFields: Partial<Person>): Promise<Person> => (
         await graphql.mutation(
             `editUser(userData:$userData){
                 ${templateUser}

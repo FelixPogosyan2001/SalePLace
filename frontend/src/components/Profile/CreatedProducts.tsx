@@ -26,7 +26,6 @@ interface LinkStateToProps {
     products: Array<Element>
 }
 
-
 type CPProps = LinkDispatchesToProps & LinkStateToProps
 
 const CreatedProducts: React.FC<CPProps> = ({
@@ -57,7 +56,7 @@ const CreatedProducts: React.FC<CPProps> = ({
     const deleteModal = (): void => {
         let block = document.getElementsByClassName('shadowBox')[0];
         block.parentNode.removeChild(block);
-        getComputedStyle(document.body).overflow = 'auto';
+        document.body.style.overflow = 'auto';
         setModal(false);
     }
   

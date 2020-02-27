@@ -30,7 +30,7 @@ app.get('/',(req,res) => {
 
 io.sockets.on('connection',(socket) => {
     let urlRoom;
-    console.log('New Client');
+    
     socket.on('message',(data) => {
         io.to(urlRoom).emit('getMessage',data)
     });
@@ -41,7 +41,7 @@ io.sockets.on('connection',(socket) => {
     })
 });
 
-mongoose.connect("mongodb://localhost:27017/SalePlace",(error) => {
+mongoose.connect("mongodb://localhost:27017/SalePlace", { useNewUrlParser: true, useUnifiedTopology: true }, (error) => {
     if (error) throw new Error(error)
     http.listen(2001,() => console.log('Server has started'))
 })

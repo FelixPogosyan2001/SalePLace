@@ -26,9 +26,13 @@ export interface Like {
 
 export interface Person {
     _id: string
+    email?: string
+    password?: string
     name: string
     lastname: string
     avatar: string
+    dialogs?: Array<Dialog> 
+    createdProducts?: Array<string>
     gender?: string
 }
 

@@ -1,14 +1,14 @@
 import {FIX_DATA_USER} from '../actions/user';
 import {CHANGE_STATUS_CONNECTION} from '../actions/communication';
-import {Action} from '../../additional/interfaces';
+import {Action, Person} from '../../additional/interfaces';
 
-type ProfileState = typeof initialState
+type ProfileState =  Person & { connection?: boolean | string }
 export type Actions = (
-  | Action<typeof FIX_DATA_USER, typeof initialState> 
+  | Action<typeof FIX_DATA_USER, ProfileState> 
   | Action<typeof CHANGE_STATUS_CONNECTION, boolean>
 )
 
-let initialState = {
+let initialState: ProfileState = {
     _id : '',
     email : '',
     password : '',
@@ -16,7 +16,7 @@ let initialState = {
     lastname : '',
     avatar : '',
     gender : '',
-    connection: null as (boolean | string)
+    connection: null 
 }
 
 export default (state = initialState, action: Actions): ProfileState => {

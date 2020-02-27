@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {BrowserRouter,Route,Switch,Redirect} from 'react-router-dom';
 import {Header} from './Header';
 import {Private} from  './Private';
@@ -31,7 +31,7 @@ const App: React.FC<AppProps> = ({ token, logout }) => {
               {!token && <Redirect to='/' exact />}
             </Switch>
           </ErrorBoundary>
-          <Footer />
+          <Footer token={token} />
         </div>
     </BrowserRouter>
   );

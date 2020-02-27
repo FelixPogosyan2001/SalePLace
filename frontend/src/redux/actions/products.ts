@@ -1,5 +1,5 @@
 import productsAPI from '../../api/products';
-import {toggleLoader} from './commonActions';
+import {toggleLoader,TLike,like, TDel, withoutLike, TView, incrementView} from './commonActions';
 import {Product, Like, Pag} from '../../additional/interfaces';
 import {AppActions} from '../../additional/actions';
 import {Dispatch} from 'redux';
@@ -8,6 +8,9 @@ export const ADD_NEW_PRODUCT = 'ADD_NEW_PRODUCT';
 export const ADD_VIEW = 'ADD_VIEW';
 export const LIKE_PRODUCT = 'LIKE_PRODUCT';
 export const DELETE_LIKE = 'DELETE_LIKE';
+export const ADD_VIEW_IN_RECOMMENDATION = 'ADD_VIEW_IN_RECOMMENDATION';
+export const LIKE_PRODUCT_RECOMMENDATION = 'LIKE_PRODUCT_RECOMMENDATION';
+export const DELETE_LIKE_RECOMMENDATION = 'DELETE_LIKE_RECOMMENDATION';
 export const FIX_LIKES = 'FIX_LIKES';
 export const FIX_FOUND_PRODUCTS = 'FIX_FOUND_PRODUCTS';
 export const GET_RECOMMENDATIONS = 'GET_RECOMMENDATIONS';
@@ -15,10 +18,10 @@ export const TOGGLE_LOADER_PRODUCTS = 'TOGGLE_LOADER_PRODUCTS';
 
 //Action Creators 
 const newProduct = (product: Product): AppActions => ({type : ADD_NEW_PRODUCT,payload : product});
-const like = (productId: string): AppActions => ({type : LIKE_PRODUCT,payload : productId});
-const withoutLike = (productId: string): AppActions => ({type : DELETE_LIKE,payload : productId});
+//const like = (productId: string): AppActions => ({type : LIKE_PRODUCT,payload : productId});
+//const withoutLike = (productId: string): AppActions => ({type : DELETE_LIKE,payload : productId});
 const setLikes = (likes: Array<Product>): AppActions => ({type : FIX_LIKES,payload : likes})
-const incrementView = (views: string): AppActions => ({type : ADD_VIEW,payload : views});
+//const incrementView = (views: string): AppActions => ({type : ADD_VIEW,payload : views});
 const setFoundProducts = (products: Array<Product> | Pag): AppActions => ({type : FIX_FOUND_PRODUCTS,payload : products}) 
 const implementRecommendations = (rec: Array<Product>): AppActions => ({type : GET_RECOMMENDATIONS,payload : rec});
 
@@ -36,6 +39,21 @@ export const addProduct = (info: Partial<Product>) => async (dispatch: Dispatch<
 export const likeProduct = (id: string) => async (dispatch: Dispatch<AppActions>) => {
     await productsAPI.likeProduct(id);
     dispatch(like(id));
+}
+
+export const likeProductRec = (id: string) => async (dispatch: Dispatch<AppActions>) => {
+    await productsAPI.likeProduct(id);
+    dispatch(like(id, LIKE_PRODUCT_RECOMMENDATION));
+}
+
+export const deleteLikeFromRec = (id: string) => async (dispatch: Dispatch<AppActions>) => {
+    await productsAPI.deleteLike(id);
+    dispatch(withoutLike(id, DELETE_LIKE_RECOMMENDATION));
+}
+
+export const addViewInRec = (id: string, view: number) => async (dispatch: Dispatch<AppActions>) => {
+    await productsAPI.newView(id,view);
+    dispatch(incrementView(id, ADD_VIEW_IN_RECOMMENDATION))
 }
 
 export const deleteLike = (id: string) => async (dispatch: Dispatch<AppActions>) => {

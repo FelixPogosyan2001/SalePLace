@@ -27,7 +27,7 @@ const Product: React.FC<ProductProps> = (props) => {
                 <button onClick={props.addInCart.bind(null, props.product)}>Add to Cart</button>
             </div>
             <section className='product__interactive'>
-                <i style={{color : props.product.liked ? 'red' : 'black'}} 
+                <i style={{color : props.product.liked ? 'red' : '#242939'}} 
                    className="fas fa-heart" 
                    onClick={
                        !props.product.liked ? props.like.bind(null, props.product._id) : 

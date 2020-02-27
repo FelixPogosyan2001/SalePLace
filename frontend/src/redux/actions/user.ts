@@ -2,26 +2,20 @@ import usersAPI from '../../api/users';
 import {toggleLoader} from './commonActions';
 import {AppActions} from '../../additional/actions';
 import {Dispatch} from 'redux';
+import { Person } from '../../additional/interfaces';
 
 export const SIGN_IN = 'SIGN_IN';
 export const TOGGLE_LOADER_SIGN_IN = 'TOGGLE_LOADER_SIGN_IN';
 export const FIX_DATA_USER = 'FIX_DATA_USER';
 export const LOGOUT = 'LOGOUT';
 
-interface User {
-    _id: string
-    email: string
-    password: string
-    name: string
-    lastname: string
-    avatar: string
-    gender: string
-    connection: boolean
+interface Client extends Person {
+    connection?: boolean
 }
 
 //Action Creators
 const setToken = (token: string): AppActions => ({type: SIGN_IN, payload: token});
-const fixUser = (user: User): AppActions => ({type: FIX_DATA_USER, payload: user});
+const fixUser = (user: Client): AppActions => ({type: FIX_DATA_USER, payload: user});
 export const logout = (): AppActions => ({type: LOGOUT})
 
 // Thunk Creators
@@ -39,11 +33,11 @@ export const signIn = (data: { email: string, password: string }) => async (disp
 }
 
 export const getUser = () =>  async (dispatch: Dispatch<AppActions>) => {
-    const user: User = await usersAPI.getUser();
+    const user: Client = await usersAPI.getUser();
     dispatch(fixUser(user))
 }
 
-export const editUser = (values: Partial<User>) => async (dispatch: Dispatch<AppActions>) => {
-    const editedUser: User = await usersAPI.editUser(values);
+export const editUser = (values: Partial<Client>) => async (dispatch: Dispatch<AppActions>) => {
+    const editedUser: Client = await usersAPI.editUser(values);
     dispatch(fixUser(editedUser));
 }

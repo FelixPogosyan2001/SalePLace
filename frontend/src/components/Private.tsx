@@ -2,15 +2,25 @@ import React,{ useState } from 'react';
 import SignIn from './SignIn';
 import SignUp from './SignUp';
 
-export const Private = () => {
+interface PrivateProps {
+    location: {
+        pathname: string
+        search: string
+        hash: string
+        state: any
+        key: string
+    }
+}
+
+export const Private: React.FC<PrivateProps> = ({ location }) => {
     const [map,changeMap] = useState('signIn');
-    const focusInput = (arg: any) => arg.current.classList.add('focusInputs');
-    const blurInput = (value: string | boolean, arg: any) =>  {
-        if (!value) {
-            arg.current.classList.remove('focusInputs');
-        }
-    };
-  
+    const [loc,setLoc] = useState<string>(location.state);
+
+    const changeLocation = (loc: string): void => {
+        setLoc(null);
+        changeMap(loc);
+    }
+
     return(
         <div className="auth">
             <div className="auth__photo">
@@ -26,10 +36,10 @@ export const Private = () => {
             </div>
             <form className='auth__form' onSubmit={(e) => e.preventDefault()}>
                 <p>
-                    <span onClick={() => changeMap('signIn')} >Sign In</span>
-                    <span onClick={() => changeMap('signUp')} >Sign Up</span>
+                    <span onClick={changeLocation.bind(null, 'signIn')} >Sign In</span>
+                    <span onClick={changeLocation.bind(null, 'signUp')} >Sign Up</span>
                 </p>
-                {map === 'signIn' ? <SignIn /> : <SignUp />}
+                {(map == 'signIn' && loc != 'signUp') ? <SignIn /> : <SignUp />}
             </form>
         </div>
     )
