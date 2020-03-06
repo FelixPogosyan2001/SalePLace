@@ -1,0 +1,206 @@
+.app-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 4 !important;
+    height: 70px;
+    width: 100vw;
+    background-color: #fff;
+    box-shadow: 2px 2px 10px rgb(59, 58, 58);
+    transition: all 1s;
+
+    .fa-sign-out-alt {
+        position: fixed;
+        right: 20px;
+        top: 20px;
+        font-size: 30px;
+        cursor: pointer;
+        color: #48465b;
+
+        &:hover {
+            color: $colorOfTheme
+        }
+
+    }
+
+    .fa-heart {
+        position: fixed;
+        right: 140px;
+        top: 20px;
+        font-size: 30px;
+        cursor: pointer;
+        color : #48465b;
+        animation : emergenceHeart .5s linear 1;
+
+        &:hover {
+            color:rgb(231, 26, 26);
+        }
+
+    }
+
+    .fa-shopping-cart {
+        position: fixed;
+        right: 80px;
+        top: 20px;
+        font-size: 30px;
+        cursor: pointer;
+        color : #48465b;
+
+        &:hover {
+            color: $colorOfTheme;
+        }
+
+    }
+
+    .fa-search {
+        position: fixed;
+        right: 140px;
+        top: 20px;
+        transition: .5 all linear;
+        font-size: 30px;
+        cursor : pointer;
+        color: #48465b;
+
+        &:hover {
+            color: $colorOfTheme;
+        }
+
+    }
+
+    .changeLocal {
+        right: 200px !important;
+    }
+
+    .changeLocalInput {
+        right: 180px;
+
+        + .fa-times {
+            right: 140px
+        }
+
+    }
+
+    .fa-times {
+        @extend .fa-search;
+        right : 200px
+    }
+
+    menu {
+        position: fixed;
+        min-height: 100vh;
+        width: 20vw;
+        display: grid;
+        grid-template-rows: repeat(4,50px);
+        justify-items: center;
+        align-items: center;
+        margin: 0;
+        padding: 0;
+        padding-top: calc(50vh - 75px);
+        list-style-type: none;
+        transition: 1s;
+        transform: translateX(-20vw);
+        background-color: #fff;
+
+        .list__item {
+            font-weight: 700;
+            font-size: 1.3em;
+            color:#657195;
+            transition: 0.3s;
+            text-decoration: none;
+            cursor: pointer;
+
+            &:hover {
+                color:#2454e4
+            }
+
+        }
+
+    }
+    
+}
+
+.app-header__button {
+    position: absolute;
+    top: 0%;
+    width: 35px;
+    height: 35px;
+    background: #242939;
+    border: none;
+    transition: 1s;
+
+    span {
+        height:2px;
+        display: block;
+        background: white;
+        width:90%;
+
+        &::before,
+        &::after {
+            content: '';
+            position: absolute;
+            top: 9px;
+            display: block;
+            height: 2px;
+            width: 60%;
+            background: white;
+            transition: 0.2s;
+        }
+
+        &::after {
+            top: 0  !important;
+            bottom: 9px;
+        }
+
+    }
+}
+
+.app-header__title {
+    height: 100%;
+    overflow: hidden;
+
+    > h2 {
+        position: absolute;
+        left: 50%;
+        top: 0;
+        transform: translateX(-50%);
+        letter-spacing: 5px;
+        font-family: 'Montserrat', sans-serif;
+        color: #fff;
+        transition: .7s;
+        opacity: 0;
+
+        > span {
+            display: inline-block;
+            text-transform: uppercase;
+
+            @for $i from 1 to 10 {
+                &:nth-child(#{$i}) {
+                    animation: titleEffect 2.8s (1.8 + (0.2 * ($i - 1))) linear;
+                }
+            }
+
+        }
+
+    }
+
+    > video {
+        position: relative;
+        bottom: 18px;
+        z-index: -1;
+        height: 120px;
+        width: 100%;
+        object-fit: cover;
+        transition: .7s;
+
+        &::before {
+            content: '';
+            display: block;
+            position: absolute;
+            left: 0;
+            width: 1px;
+            height: 100%
+        }
+
+    }
+
+}

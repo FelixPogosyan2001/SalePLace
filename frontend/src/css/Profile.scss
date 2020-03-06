@@ -1,0 +1,135 @@
+.profile {
+    @include shiftDown(50px);
+
+    .profile__interactive {
+        height : 120px;
+        padding:100px 30px 5px 40px;
+        background: #fff;
+        
+    }
+
+    .profile__interactive__title {
+        font-family: 'Montserrat', sans-serif;
+    }
+
+    .profile__interactive__menu {
+        .active {
+            border-bottom: 3px solid $colorOfTheme;
+        }
+
+        li {
+            display: inline-block;
+            margin: 16px;
+            font-size: 20px;
+            font-family: 'Montserrat', sans-serif;
+            cursor: pointer;
+            
+            &:hover {
+                border-bottom: 3px solid $colorOfTheme
+            }
+
+        }
+
+    }
+
+    .profile__content {
+        text-align: center;
+    }
+
+}
+
+.createdProducts {
+    @include profileTemplate;
+
+    main {
+        display: grid;
+        grid-template-columns: repeat(3,1fr);
+        grid-gap: 1.5em;
+        height: 400px;
+        padding: 5px;
+        overflow: auto;
+    }
+
+    .addProduct {
+        width: 60%;
+        height: 50px;
+        justify-self: center;
+        grid-column: 1/2;
+
+        button {
+            @include styleButton(80%,90%);
+        }
+
+    }
+
+}
+
+.settings {
+    @include profileTemplate;
+
+    .settings__item {
+        min-height: 50px;
+        max-height: 100vh;
+        width: 80%;
+        margin-bottom: 30px;
+        padding: 50px - (50px / 2) 15px 0 15px;
+        text-align: start;
+        font-family: 'Montserrat', sans-serif;
+        color:rgba(34, 33, 33,0.9);
+        background: #fff;
+        transition-timing-function: ease-in;
+        transition-duration: 0.6s;
+        cursor: pointer;
+        box-shadow: 3px 3px 15px rgba(0,0,0,0.7);
+        overflow: hidden;
+
+        h2 {
+            margin: 0
+        }
+
+        &:hover {
+            background: rgb(250, 250, 250);
+            
+        }
+
+    }
+
+    .settings__item__edit {
+        animation: collapsed_1 0.5s linear;
+        margin-top: 30px;
+        text-align: center;
+
+        button {
+            @include styleButton(80px,40px)
+        }
+        
+    }
+
+    .settings__item__change {
+        @extend .settings__item__edit;
+        animation: collapsed_2 0.5s linear;
+    }
+
+    .inputRadio {
+        justify-self: center;
+    }
+
+}
+
+.info {
+    @include profileTemplate;
+
+    main {
+        position: relative;
+        height: 680px;
+        width: 80%;
+        justify-self: end;
+        background: white;
+
+        .error404 {
+            width: 100%;
+            top: 50%;
+        }
+
+    }
+}

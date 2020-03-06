@@ -1,0 +1,67 @@
+.recommendations {
+    position: relative;
+    width: 100vw;
+    min-height: 250px;
+    margin-top: 100px;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 4px 4px 15px rgba(0,0,0,.6);
+    background: white;
+
+    .back {
+        @include controller(left,3vw);
+    }
+
+    .go {
+        @include controller(right,2vw); 
+    }
+
+    .recommendations__title {
+        position: relative;
+        font-family : 'Montserrat',sans-serif;
+        text-align : left !important;
+        margin : 0 0 1rem 25px;
+        color: #48465b;
+        transition: .5s;
+        cursor: pointer;
+
+        &::before {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            display: block;
+            width: 0px;
+            height: 3px;
+            background: #dc4dac;
+            transition: 1s;
+        }
+
+        &:hover {
+            color: $colorOfTheme;
+
+            &::before {
+                width: 235px
+            }
+            
+        }
+    }
+
+    .recommendations__body {
+        width: 80vw;
+        margin-bottom: 65vh;
+        grid-gap: 2rem;
+        transition: all 1s;
+        transform: translateX(0px);
+
+        .product {
+            border: 2px solid mix(#48465b,$colorOfTheme);
+
+            .product__footer {
+                border-bottom: 1.7px solid mix(#48465b,$colorOfTheme)
+            }
+        }
+        
+    }
+
+}

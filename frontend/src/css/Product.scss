@@ -1,0 +1,84 @@
+.product {
+    position: relative;
+    width: 100%;
+    height: auto;
+    background-color: #fff;
+    border: 2px solid rgba(36, 41, 57,0.3);
+    border-top: 2.5px solid rgba(36,41,57,0.3);
+
+    .product__header {
+        width:100%;
+
+        .product__header__image {
+            @include adaptiveImage;
+            width: 100%;
+            height: 200px;      
+        }
+
+    }
+
+    .product__details {
+        padding: 0 8px 0px 8px;
+
+        #product__details__price {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 25px;
+            text-align: left;
+            font-weight: bold;
+            color: #48465b
+        }
+
+        #product__details__title {
+            font-family: 'Montserrat', sans-serif;
+            text-align: left;
+            color: #48465b
+        }
+
+        #product__details__category {
+            font-family: 'Montserrat', sans-serif;
+            text-align: left;
+            color: $colorOfTheme
+        }
+        
+    }
+
+    .product__footer {
+        display: grid;
+        grid-template-columns: repeat(2,1fr);
+        justify-items: center;
+        grid-column-gap: 15px ;
+        padding: 5px;
+        border-bottom: 1.7px solid rgba(36, 41, 57,0.6);
+
+        button {
+            @include styleButton(110px,auto,16px){
+                padding: 8px;
+            }
+        }
+
+    }
+    
+    .product__interactive {
+        display: grid;
+        grid-template-columns: repeat(2,50%);
+        grid-template-rows: 100%;
+        align-self: center;
+        margin: 10px 0 10px 0;
+        width: 100%;
+
+        i {
+            font-size: 20px;
+            align-self: center;
+            justify-self: center;
+            padding-right: 2px;
+            color: #242939;
+
+            &::before {
+                padding-right: 5px
+            }
+
+        }
+    }
+
+}
+

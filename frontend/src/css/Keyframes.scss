@@ -1,0 +1,99 @@
+@keyframes lds-dual-ring {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+}
+  
+@keyframes lds-ellipsis1 {
+    0% {
+      transform: scale(0);
+    }
+    100% {
+      transform: scale(1);
+    }
+}
+
+@keyframes lds-ellipsis3 {
+    0% {
+      transform: scale(1);
+    }
+    100% {
+      transform: scale(0);
+    }
+}
+
+@keyframes titleEffect {
+    from {
+        transform: rotateY(90deg);
+        opacity: 0;
+        filter: blur(10px);
+    } to {
+        transform: rotateY(0deg);
+        opacity: 1;
+        filter: blur(0);
+    }
+}
+
+@keyframes lds-ellipsis2 {
+    0% {
+      transform: translate(0, 0);
+    }
+    100% {
+      transform: translate(24px, 0);
+    }
+}
+  
+@keyframes deployCatalog {
+    from {
+        max-height: 0;
+    } to {
+        max-height: 15rem
+    }
+}
+
+@keyframes switchBackground {
+    from {
+       background-position: 0%;
+    } to {
+       background-position: 400%;
+    }
+}
+
+@keyframes emergenceHeart {
+    from {
+        transform: translateY(-20vh);
+    } to {
+        transform: translateX(0vh);
+    }
+}
+
+@keyframes slideEffectRight {
+    from {
+        transform: translateX(-110vw);
+        opacity: 0;
+    } to {
+        transform: translateX(0vw);
+        opacity: 1;
+    }
+}
+
+@keyframes slideEffectLeft {
+    from {
+        transform: translateX(0vw);
+        opacity: 1;
+    } to {
+        transform: translateX(-110vw);
+        opacity: 0;
+    }
+}
+
+@keyframes effectIcon {
+    from {
+        transform: scale(0)
+    } to {
+        transform: scale(1.0)
+    }
+}

@@ -1,0 +1,98 @@
+.chat {
+    height: 100%;
+
+    .messages {
+        height: 80%;
+        padding: 1rem 2rem 1rem 2rem;
+        overflow: auto;
+
+        p, span {
+            text-align: left !important
+        }
+
+    }
+
+    .chat__tools {
+        text-align: left;
+        border-bottom: 2px solid rgba($colorOfText,.3);
+
+        > i {
+            font-size: 20px;
+            margin: 10px 0 10px 10px;
+            cursor: pointer;
+
+            &::before {
+                margin-right : 5px;
+            }
+
+        }
+
+    }
+
+    .addingMessage {
+        border-top : 2px solid rgba($colorOfText, .3);
+
+        > input {
+            position: relative;
+            top: 10px;
+            width: 50%;
+            height: 25px;
+            padding: 5px;
+            border-radius: 5px;
+            border: 1.5px solid rgb(221, 221, 221);
+            outline: none;
+            font-size: 17px;
+
+            &:focus {
+                border : 1.5px solid $colorOfTheme
+            }
+
+        }
+
+        > .fa-paper-plane {
+            position: absolute;
+            bottom: 20px;
+            margin-left: 14px;
+            font-size: 25px;
+            cursor: pointer;
+            animation: effectIcon .4s ease-out;
+
+            &:hover {
+                color: $colorOfTheme
+            }
+
+        }
+    }
+
+    .message {
+        position: relative;
+        text-align: left;
+        margin-bottom: 1.5rem;
+
+        > div {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            border-radius: 100%;
+            background-position: center;
+            background-size: cover;
+            margin-right: 5px
+        }
+
+        > #data {
+            position: absolute;
+            top: 3px;
+            font-size: 18px;
+            font-weight: 700;
+
+            > time {
+                font-weight : 400;
+                opacity : .7;
+                margin-left : 6px
+            }
+
+        }
+
+    }
+
+}

@@ -1,0 +1,21 @@
+.favorites {
+    position: relative;
+    top: 70px;
+    display: grid;
+    grid-template-columns: repeat(5,1fr);
+    grid-template-rows: 100px 1fr;
+    grid-gap: 20px;
+    padding: 2rem;
+    
+    h1 {
+        grid-column: 1/6;
+        font-family: 'Robotto', sans-serif
+    }
+
+    .lds-dual-ring {
+        position: relative;
+        height: 60vh;
+        left: calc(50vw - 80px);
+    }
+
+}
