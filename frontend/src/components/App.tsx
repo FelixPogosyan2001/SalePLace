@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {BrowserRouter,Route,Switch,Redirect} from 'react-router-dom';
 import {Header} from './Header';
 import {Private} from  './Private';
@@ -11,7 +11,7 @@ import Landing from './Landing';
 import {Footer} from './Footer';
 import {ErrorBoundary} from './Errors/ErrorBoundary';
 import {AppProps} from '../additional/interfaces';
-import '../css/App.css';
+import '../css/App.scss';
 
 const App: React.FC<AppProps> = ({ token, logout }) => {
   return (

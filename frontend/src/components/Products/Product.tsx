@@ -1,4 +1,4 @@
-import React,{ useState } from 'react';
+import React,{ useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { Product as ProductEL, Dispatches } from '../../additional/interfaces';
 import MoreInfo from '../MoreInfo';
@@ -11,6 +11,14 @@ const Product: React.FC<ProductProps> = (props) => {
        setMore(true);
        props.addView(props.product._id,props.product.views)
     };
+
+    useEffect(() => {
+        if (more) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'auto';
+        }
+    }, [more]);
 
     return(
         <div className="product">

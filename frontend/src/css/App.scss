@@ -1,8 +1,8 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,500&display=swap');
-@import 'Header';
 @import 'Keyframes';
 @import 'Mixins';
 @import 'Variables';
+@import 'Header';
 @import 'Cart';
 @import 'Chat';
 @import 'Dialog';
@@ -38,6 +38,48 @@ body {
 
 ::-webkit-scrollbar-track {
     background: rgb(228, 228, 228)
+}
+
+.zoom-container {
+    .zoom {
+        position:absolute;
+        left: 0;
+        z-index: 1;
+        width: 60px;
+        height: 60px;
+        border-radius: 100%;
+        border: 3px double black;
+        overflow: hidden;
+        display: none;
+        transform: scale(1.5);
+    
+        > .zoom__content {
+            width: calc(50vw - 50px);
+            height: 75vh;
+            background-position: center; 
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+    
+    }
+
+    > .stick {
+        display: block;
+        width: 5px;
+        height: 50px;
+        background: black;
+        border: none;
+        border-radius: 5px;
+        position: absolute;
+        transform: translate(60px,70px) rotate(-25deg);
+        z-index: 2;
+    }
+}
+
+.fa-times {
+    &:hover {
+        color: $colorOfTheme;
+    }
 }
 
 .searchInput {
@@ -112,8 +154,7 @@ body {
         left: 30vw;
         min-height: 300px;
         width: 40vw;
-        background: #FFF;
-        background: rgb(218, 218, 218);
+        background: #f2f3f8;
 
         .message-modal__header {
             position: relative;
@@ -593,11 +634,13 @@ body {
     }
 
     > .moreInfo__photo {
-        width: 70%;
-        height: 70%;
+        position: relative;
+        width: calc(50vw - 50px);
+        height: 75vh;
         justify-self: center;
         background-position: center;
         background-size: cover;
+        cursor: pointer;
     }
 
     > .moreInfo__delete {
