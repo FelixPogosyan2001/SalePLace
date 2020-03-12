@@ -29,13 +29,11 @@ exports.changeStateDialogs = async function (userId,{message,dialog}) {
 exports.lenghtSubsequence = (word,main) => {
     var counter = 0;
 
-    if (word.length == main.length) {
-        for (var i = 0; i < word.length; i++) {
-            if (word[i] == main[i]) counter ++ ;
-        }
+    for (var i = 0; i < word.length; i++) {
+        if (word[i] == main[i]) counter ++ ;
     }
 
-    return counter
+    return counter;
 }
 
 exports.needUpdate = (values) => {

@@ -34,21 +34,25 @@ module.exports = {
         let foundedProducts = [];
         let max = 0;
         let allegedProduct = null;
-
+        
         try {
             array.forEach((item) => {
-                const current = lenghtSubsequence(word.toLowerCase(),item.title.toLowerCase())
+                const current = lenghtSubsequence(word.toLowerCase(), item.title.toLowerCase());
+
                 if (max < current)  {
                     max = current;
-                    allegedProduct = item;
+                    allegedProduct = item.title.slice(0, word.length);
                 }
+
              });
-         
-             array.forEach((item) => {
-                 if (item.title == allegedProduct.title) {
-                     foundedProducts.push(item);
-                 }
-             });
+    
+             if (Math.round((max / word.length) * 100) >= 60) {
+                array.forEach((item) => {
+                    if (item.title.slice(0, allegedProduct.length) == allegedProduct) {
+                        foundedProducts.push(item);
+                    }
+                });
+             }
 
              return foundedProducts;
         } catch(error){
@@ -59,13 +63,6 @@ module.exports = {
         isLogged(context.isAuth);
         var likes = await Like.find({user : context.userId['userId']}).populate('product');
         likes = likes.map(like => like.product);
-        /*var likes = [
-            {"_id":"5de8014fb8de261afc22e6a9","title":"airpods","description":"New","price":500,"image":"sfsff.jpg","views":0,"likes":0,"category":"gadgets","creator":"5de41362aa24e02b18c8678a"},
-            {"_id":"5de801e8b8de261afc22e6af","title":"futbalka","description":"super","price":1000,"image":"sfwrwrsweweewff.jpg","views":0,"likes":0,"category":"srrt","creator":"5de41362aa24e02b18c8678a",},
-            {"_id":"5de801e8b8de261afc22e6af","title":"futbalka","description":"super","price":1000,"image":"sfwrwrsweweewff.jpg","views":0,"likes":0,"category":"year","creator":"5de41362aa24e02b18c8678a",},
-            {"_id":"5de801e8b8de261afc22e6af","title":"futbalka","description":"super","price":1000,"image":"sfwrwrsweweewff.jpg","views":0,"likes":0,"category":"rught","creator":"5de41362aa24e02b18c8678a",}
-            
-        ]*/
         var list = {};
         var betterCategory = new Array(3); // Standart Middle Premium 
 
