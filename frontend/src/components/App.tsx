@@ -23,12 +23,12 @@ const App: React.FC<AppProps> = ({ token, logout }) => {
               <Route exact path='/' component={Landing} />
               <Route path='/products' component={Products} />
               <Route path='/cart' component={Cart} />
-              <Route path='/favorites' component={Favorites} />
-              <Route path='/search' component={SearchPage} />                                    
+              <Route path='/search' component={SearchPage} />                               
               {!token && <Route path='/authentication' component={Private} />}
-              {token && <Redirect from="/authentication" to='/profile' exact />}
+              {!token && <Redirect to='/' exact />}     
+              {token && <Route path='/favorites' component={Favorites} />}
               {token && <Route path='/profile' component={Profile} />}
-              {!token && <Redirect to='/' exact />}
+              {token && <Redirect from="/authentication" to='/profile' exact />}
             </Switch>
           </ErrorBoundary>
           <Footer token={token} />
