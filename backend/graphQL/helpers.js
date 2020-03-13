@@ -1,8 +1,8 @@
-const User = require('../models/user');
-const {createWriteStream} = require('fs');
+const { createWriteStream } = require('fs');
 const path = require('path');
+const User = require('../models/user');
 
-exports.transform = (args,prop = 'creator') => {
+exports.transform = (args, prop = 'creator') => {
     const user = async ID => await User.findById(ID);
     
     return {
@@ -11,7 +11,7 @@ exports.transform = (args,prop = 'creator') => {
     }
 }
 
-exports.changeStateDialogs = async function (userId,{message,dialog}) {
+exports.changeStateDialogs = async function (userId, { message, dialog }) {
     var user = await User.findById(userId);
     let index = user._doc.dialogs.findIndex(item => item.url == dialog.url);
     
@@ -26,7 +26,7 @@ exports.changeStateDialogs = async function (userId,{message,dialog}) {
     return await user.save();
 }
 
-exports.lenghtSubsequence = (word,main) => {
+exports.lenghtSubsequence = (word, main) => {
     var counter = 0;
 
     for (var i = 0; i < word.length; i++) {
@@ -54,10 +54,11 @@ exports.upload = async (img) => {
     if (mimetype == 'image/jpeg' || mimetype == 'image/png') {
         const stream = createReadStream();
         const photo = createWriteStream(path.resolve('uploads') + '/' + filename);
+
         stream.pipe(photo);
         return `uploads/${filename}`;
     } else {
-        throw Error('Image could not be saved')
+        throw Error('Image could not be saved');
     }
 }
 

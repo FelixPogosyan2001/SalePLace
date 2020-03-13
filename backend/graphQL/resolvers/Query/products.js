@@ -1,11 +1,11 @@
 const Product = require('../../../models/product');
 const User = require('../../../models/user');
 const Like = require('../../../models/like');
-const {isLogged,lenghtSubsequence,transform} = require('../../helpers');
+const { isLogged, lenghtSubsequence, transform } = require('../../helpers');
 
 
 module.exports = {
-    products : async (parent,{page,pageSize = 8}) => {
+    products : async (_parent,{ page, pageSize = 8 }) => {
         const response = {
             data : await Product.find().populate('creator').skip((page - 1) * pageSize).limit(pageSize),
             totalCount : await Product.count(),
@@ -14,22 +14,24 @@ module.exports = {
         }
         return response;
     },
-    createdProducts : async (parent,args,context) => {
+    createdProducts : async (_parent, _args, context) => {
         isLogged(context.isAuth);
-        const {userId} = context.userId;
+
+        const { userId } = context.userId;
         const user = await User.findById(userId).populate('createdProducts');
+
         return user.createdProducts.map(product => transform(product._doc));
     },
-    productsCatalog : async (parent,{category,page,pageSize = 8}) => {
+    productsCatalog : async (_parent, { category, page, pageSize = 8 }) => {
         const response = {
-            data : await Product.find({category}).populate('creator').skip((page - 1) * pageSize).limit(pageSize),
-            totalCount : await Product.find({category}).count(),
+            data : await Product.find({ category }).populate('creator').skip((page - 1) * pageSize).limit(pageSize),
+            totalCount : await Product.find({ category }).count(),
             page,
             pageSize
         }
         return response;
     },
-    searchProduct : async (parent,{word}) => {
+    searchProduct : async (_parent, { word }) => {
         let array = await Product.find().populate('creator');
         let foundedProducts = [];
         let max = 0;
@@ -59,14 +61,15 @@ module.exports = {
             return foundedProducts;
         }
     },
-    recommendations : async (parent,args,context) => {
+    recommendations : async (_parent, _args, context) => {
         isLogged(context.isAuth);
-        var likes = await Like.find({user : context.userId['userId']}).populate('product');
+
+        var likes = await Like.find({ user: context.userId['userId'] }).populate('product');
         likes = likes.map(like => like.product);
         var list = {};
         var betterCategory = new Array(3); // Standart Middle Premium 
 
-        likes.forEach((item,index) => {
+        likes.forEach((item, index) => {
             if (!list[item.category]) list[item.category] = 1;
             else list[item.category] += 1;
         });
@@ -87,6 +90,6 @@ module.exports = {
             list.splice(deletedCategory,1);
         }
       
-        return await Product.find({category : {$in : betterCategory}}).populate('creator');
+        return await Product.find({ category: { $in: betterCategory } }).populate('creator');
     }
 }
